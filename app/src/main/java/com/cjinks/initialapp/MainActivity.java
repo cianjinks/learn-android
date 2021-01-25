@@ -46,9 +46,6 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
         fab.setOnClickListener(view -> {
             DialogFragment frag = new AddGoalDialog();
             frag.show(getSupportFragmentManager(), "addgoalfrag");
-            //Random rand = new Random();
-            //data.add("This box says " + Math.abs(rand.nextInt() % 10));
-            //adapter.notifyDataSetChanged();
         });
 
      }
