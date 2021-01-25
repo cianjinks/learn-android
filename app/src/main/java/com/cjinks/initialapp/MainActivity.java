@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RecyclerView recyclerView = (RecyclerView)  findViewById(R.id.recyclerview);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 6);
-        //LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        //GridLayoutManager layoutManager = new GridLayoutManager(this, 6);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         generateData();
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         Random rand = new Random();
         for(int i = 0; i < dataPoints; i++)
         {
-            data[i] = String.valueOf(Math.abs(rand.nextInt() % 10));
+            data[i] = "This box says " + String.valueOf(Math.abs(rand.nextInt() % 10));
         }
     }
 }

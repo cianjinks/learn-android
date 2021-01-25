@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
     private String[] localDataSet;
-    private static final String[] colors = new String[] {"#000000", "#8b0000", "#FF0000", "#FF8C00", "#FFA500", "#666600", "#FFFF66", "#CCCC00", "#006400", "#008000"};
 
     /**
      * Provide a reference to the type of views that you are using
@@ -26,13 +25,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             // Define click listener for the ViewHolder's View
 
             button = (Button) view.findViewById(R.id.tileButton);
-            button.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view) {
-                    button.setBackgroundColor(Color.parseColor(colors[Integer.parseInt(button.getText().toString())]));
-                }
-            });
         }
 
         public Button getButton() {
