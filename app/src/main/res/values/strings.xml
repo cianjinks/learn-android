@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Initial App</string>
+    <string name="fab_content_desc">Add Goal</string>
+    <string name="app_bar_title">Goals</string>
+    <string name="add_goal_dialog_msg">New Goal</string>
+    <string name="add_goal_dialog_confirm">Yes</string>
+    <string name="add_goal_dialog_cancel">No</string>
+    <string name="add_goal_dialog_hint">New Goal</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
     <string name="round_button">Round Button</string>
