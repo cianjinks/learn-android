@@ -22,7 +22,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity implements AddGoalDialog.NoticeDialogListener {
 
     public static final String EXTRA_MESSAGE = "com.cjink.initialapp.MESSAGE";
-    protected ArrayList<String> data;
+    protected ArrayList<String> goals;
     protected CustomAdapter adapter;
 
     @Override
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        generateData();
-        adapter = new CustomAdapter(data);
+        goals = new ArrayList<String>();
+        adapter = new CustomAdapter(goals);
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
@@ -62,21 +62,10 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
         startActivity(intent);
     }
 
-    public void generateData()
-    {
-        int dataPoints = 3;
-        data = new ArrayList<String>();
-
-        Random rand = new Random();
-        for(int i = 0; i < dataPoints; i++)
-        {
-            data.add("This box says " + Math.abs(rand.nextInt() % 10));
-        }
-    }
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, String goal) {
-        data.add(goal);
+        goals.add(goal);
         adapter.notifyDataSetChanged();
     }
 
