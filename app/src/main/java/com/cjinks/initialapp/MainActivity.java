@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
     }
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-        data.add("test");
+    public void onDialogPositiveClick(DialogFragment dialog, String goal) {
+        data.add(goal);
         adapter.notifyDataSetChanged();
     }
 

@@ -7,13 +7,15 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.fragment.app.DialogFragment;
 
 public class AddGoalDialog extends DialogFragment {
     public interface NoticeDialogListener {
-        public void onDialogPositiveClick(DialogFragment dialog);
+        public void onDialogPositiveClick(DialogFragment dialog, String goal);
         public void onDialogNegativeClick(DialogFragment dialog);
     }
     NoticeDialogListener listener;
@@ -24,13 +26,19 @@ public class AddGoalDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AlertDialogCustom));
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
-        builder.setView(inflater.inflate(R.layout.dialog_layout, null))
-                .setPositiveButton(R.string.add_goal_dialog_confirm, new DialogInterface.OnClickListener() {
+        View dialogView = inflater.inflate(R.layout.dialog_layout, null);
+        builder.setView(dialogView);
+
+        EditText editText = (EditText) dialogView.findViewById(R.id.newgoal);
+        builder.setPositiveButton(R.string.add_goal_dialog_confirm, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        listener.onDialogPositiveClick(AddGoalDialog.this);
+                        String str = editText.getText().toString();
+                        if(str != null) {
+                            listener.onDialogPositiveClick(AddGoalDialog.this, str);
+                        }
                     }
-                })
-                .setNegativeButton(R.string.add_goal_dialog_cancel, new DialogInterface.OnClickListener() {
+                });
+        builder.setNegativeButton(R.string.add_goal_dialog_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         listener.onDialogNegativeClick(AddGoalDialog.this);
                     }
