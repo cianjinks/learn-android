@@ -1,4 +1,4 @@
-package com.cjinks.initialapp.database;
+package com.cjinks.initialapp.Database;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

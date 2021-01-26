@@ -1,12 +1,10 @@
-package com.cjinks.initialapp.database;
+package com.cjinks.initialapp.Database;
 
 import android.content.Context;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-
-import java.io.Serializable;
 
 @Database(entities = {User.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {

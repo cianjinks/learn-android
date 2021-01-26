@@ -1,5 +1,6 @@
 package com.cjinks.initialapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.fragment.app.DialogFragment;
@@ -19,14 +21,14 @@ public class AddGoalDialog extends DialogFragment {
         public void onDialogNegativeClick(DialogFragment dialog);
     }
     NoticeDialogListener listener;
-
+    View dialogView;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AlertDialogCustom));
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
-        View dialogView = inflater.inflate(R.layout.dialog_layout, null);
+        dialogView = inflater.inflate(R.layout.dialog_layout, null);
         builder.setView(dialogView);
 
         EditText editText = (EditText) dialogView.findViewById(R.id.newgoal);

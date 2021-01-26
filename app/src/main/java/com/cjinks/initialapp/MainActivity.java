@@ -13,20 +13,18 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cjinks.initialapp.Util.LocalDateAdapter;
-import com.cjinks.initialapp.database.AppDatabase;
-import com.cjinks.initialapp.database.Goal;
-import com.cjinks.initialapp.database.User;
+import com.cjinks.initialapp.Database.AppDatabase;
+import com.cjinks.initialapp.Database.Goal;
+import com.cjinks.initialapp.Database.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -71,15 +69,15 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
         });
 
         // Testing writing json goals
-//        try {
-//            testWriteGoalJSON();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            testWriteGoalJSON();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Testing reading json goals
         try {
-            Goal goal = testReadGoalJSON();
+            ArrayList<Goal> goal = testReadGoalJSON();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -103,15 +101,27 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
         goal.addProgressDataPoint(LocalDate.parse("2021-01-06"), 1);
         goal.addProgressDataPoint(LocalDate.parse("2021-01-23"), 1);
 
+        Goal goal2 = new Goal("Workouts", "Tracking my workouts", 0, 10);
+        goal2.addProgressDataPoint(LocalDate.parse("2021-01-03"), 1);
+        goal2.addProgressDataPoint(LocalDate.parse("2021-01-04"), 7);
+        goal2.addProgressDataPoint(LocalDate.parse("2021-01-05"), 0);
+        goal2.addProgressDataPoint(LocalDate.parse("2021-01-06"), 8);
+        goal2.addProgressDataPoint(LocalDate.parse("2021-01-07"), 8);
+        goal2.addProgressDataPoint(LocalDate.parse("2021-01-19"), 4);
+
+        ArrayList<Goal> goals = new ArrayList<>();
+        goals.add(goal);
+        goals.add(goal2);
+
         Gson gson = new GsonBuilder().create();
-        String json = gson.toJson(goal);
+        String json = gson.toJson(goals);
 
         try (FileOutputStream fos = this.openFileOutput(GOAL_DATA_FILE, Context.MODE_PRIVATE)) {
             fos.write(json.getBytes());
         }
     }
 
-    public Goal testReadGoalJSON() throws FileNotFoundException {
+    public ArrayList<Goal> testReadGoalJSON() throws FileNotFoundException {
         String jsonString = "{}";
         try (FileInputStream fis = this.openFileInput(GOAL_DATA_FILE)) {
             byte[] bytes = new byte[fis.available()];
@@ -121,7 +131,8 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
             e.printStackTrace();
         }
         Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
-        return gson.fromJson(jsonString, Goal.class);
+        // Using https://www.baeldung.com/gson-list for list deserialization type
+        return gson.fromJson(jsonString, new TypeToken<ArrayList<Goal>>() {}.getType());
     }
 
 

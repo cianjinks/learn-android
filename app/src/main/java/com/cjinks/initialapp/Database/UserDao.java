@@ -1,4 +1,4 @@
-package com.cjinks.initialapp.database;
+package com.cjinks.initialapp.Database;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

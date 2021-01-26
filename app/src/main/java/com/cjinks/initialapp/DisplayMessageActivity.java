@@ -5,12 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.service.autofill.TextValueSanitizer;
 import android.widget.TextView;
 
-import com.cjinks.initialapp.database.AppDatabase;
-import com.cjinks.initialapp.database.User;
-import com.cjinks.initialapp.database.UserDao;
+import com.cjinks.initialapp.Database.AppDatabase;
+import com.cjinks.initialapp.Database.User;
 
 import java.util.List;
 

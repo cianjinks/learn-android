@@ -1,4 +1,4 @@
-package com.cjinks.initialapp.database;
+package com.cjinks.initialapp.Database;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
