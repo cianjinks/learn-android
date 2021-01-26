@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
         recyclerView.setLayoutManager(layoutManager);
 
         goals = new ArrayList<String>();
-        adapter = new CustomAdapter(goals);
+        adapter = new CustomAdapter(this, goals);
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);

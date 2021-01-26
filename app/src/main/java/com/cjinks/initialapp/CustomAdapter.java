@@ -1,10 +1,13 @@
 package com.cjinks.initialapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +16,7 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
+    private Context mContext;
     private ArrayList<String> localDataSet;
 
     /**
@@ -34,14 +38,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         }
     }
 
-    /**
-     * Initialize the dataset of the Adapter.
-     *
-     * @param dataSet String[] containing the data to populate views to be used
-     * by RecyclerView.
-     */
-    public CustomAdapter(ArrayList<String> dataSet) {
+    public CustomAdapter(Context context, ArrayList<String> dataSet) {
         localDataSet = dataSet;
+        mContext = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -58,9 +57,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        viewHolder.getButton().setText(localDataSet.get(position));
+        Button button = viewHolder.getButton();
+        button.setText(localDataSet.get(position));
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, DisplayMessageActivity.class);
+                String message = button.getText().toString();
+                intent.putExtra("com.cjink.initialapp.MESSAGE", message);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
