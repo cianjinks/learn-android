@@ -6,14 +6,19 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EdgeEffect;
 import android.widget.EditText;
 
+import com.cjinks.initialapp.database.AppDatabase;
+import com.cjinks.initialapp.database.User;
+import com.cjinks.initialapp.database.UserDao;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -24,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
     public static final String EXTRA_MESSAGE = "com.cjink.initialapp.MESSAGE";
     protected ArrayList<String> goals;
     protected CustomAdapter adapter;
+    protected AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,14 +54,21 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
             frag.show(getSupportFragmentManager(), "addgoalfrag");
         });
 
+        // Create database and insert a new user
+        db = AppDatabase.getInstance(this);
+        User user = new User(111, "Ciri", "Beeny");
+
+        AsyncTask.execute(() -> {
+            db.userDao().insert(user);
+        });
      }
     
     public void sendMessage(View view)
     {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.editText);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
+        //EditText editText = (EditText) findViewById(R.id.editText);
+        //String message = editText.getText().toString();
+        //intent.putExtra(EXTRA_MESSAGE, db);
         startActivity(intent);
     }
 
