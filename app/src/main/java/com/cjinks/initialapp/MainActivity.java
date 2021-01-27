@@ -32,6 +32,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements AddGoalDialog.NoticeDialogListener {
 
     public static final String EXTRA_MESSAGE = "com.cjink.initialapp.MESSAGE";
+    public static final String JSON_MESSAGE = "com.cjink.initialapp.JSON";
     public static final String GOAL_DATA_FILE = "goaldata.json";
     protected ArrayList<String> goals;
     protected CustomAdapter adapter;
@@ -77,7 +78,10 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
 
         // Testing reading json goals
         try {
-            ArrayList<Goal> goal = testReadGoalJSON();
+            String jsonString = testReadGoalJSON();
+            Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+            // Using https://www.baeldung.com/gson-list for list deserialization type
+            ArrayList<Goal> goals = gson.fromJson(jsonString, new TypeToken<ArrayList<Goal>>() {}.getType());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -85,10 +89,13 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
     
     public void sendMessage(View view)
     {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
-        //EditText editText = (EditText) findViewById(R.id.editText);
-        //String message = editText.getText().toString();
-        //intent.putExtra(EXTRA_MESSAGE, db);
+        Intent intent = new Intent(this, BarChartActivity.class);
+        String message = "";
+        try {
+            message = testReadGoalJSON();
+        }
+        catch (Exception ignored) {}
+        intent.putExtra(JSON_MESSAGE, message);
         startActivity(intent);
     }
 
@@ -121,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
         }
     }
 
-    public ArrayList<Goal> testReadGoalJSON() throws FileNotFoundException {
+    public String testReadGoalJSON() throws FileNotFoundException {
         String jsonString = "{}";
         try (FileInputStream fis = this.openFileInput(GOAL_DATA_FILE)) {
             byte[] bytes = new byte[fis.available()];
@@ -130,9 +137,8 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
-        // Using https://www.baeldung.com/gson-list for list deserialization type
-        return gson.fromJson(jsonString, new TypeToken<ArrayList<Goal>>() {}.getType());
+
+        return jsonString;
     }
 
 

@@ -20,15 +20,15 @@ public class DisplayMessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_message);
 
         Intent intent = getIntent();
-        //String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-
-        //TextView textView = findViewById(R.id.textView3);
-        //textView.setText(message);
+        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
         TextView textView = findViewById(R.id.textView3);
+        textView.setText(message);
+
+        TextView textView2 = findViewById(R.id.textView4);
         AsyncTask.execute(() -> {
             List<User> users = AppDatabase.getInstance(this).userDao().getAll();
-            textView.setText(users.get(0).firstName);
+            textView2.setText(users.get(0).firstName);
         });
     }
 }
