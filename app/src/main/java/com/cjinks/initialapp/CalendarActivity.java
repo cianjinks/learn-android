@@ -1,11 +1,16 @@
 package com.cjinks.initialapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.kizitonwose.calendarview.CalendarView;
 import com.kizitonwose.calendarview.model.CalendarDay;
@@ -20,6 +25,10 @@ import java.time.Year;
 import java.time.YearMonth;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
+import java.util.function.Function;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 public class CalendarActivity extends AppCompatActivity {
     @Override
@@ -27,7 +36,8 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        CalendarView calendarView = findViewById(R.id.exOneCalendar);
+        Context context = this;
+        CalendarView calendarView = findViewById(R.id.exFiveCalendar);
         calendarView.setDayBinder(new DayBinder<DayViewContainer>() {
             @Override
             public DayViewContainer create(View view) {
@@ -37,8 +47,12 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void bind(DayViewContainer viewContainer, CalendarDay calendarDay) {
                 viewContainer.textView.setText(String.valueOf(calendarDay.getDate().getDayOfMonth()));
+                viewContainer.textView.setTextColor(ContextCompat.getColor(context, R.color.example_5_text_grey_light));
+                viewContainer.day = calendarDay;
+                viewContainer.layout.setBackground(null);
             }
         });
+
         calendarView.setMonthHeaderBinder(new MonthHeaderFooterBinder<MonthHeaderContainer>() {
             @Override
             public MonthHeaderContainer create(View view) {
@@ -47,34 +61,65 @@ public class CalendarActivity extends AppCompatActivity {
 
             @Override
             public void bind(MonthHeaderContainer viewContainer, CalendarMonth calendarMonth) {
-                viewContainer.textView.setText(new DateFormatSymbols().getMonths()[calendarMonth.getMonth()-1]);
+//                viewContainer.textView.setText(new DateFormatSymbols().getMonths()[calendarMonth.getMonth()-1]);
+
+                if (viewContainer.legendLayout.getTag() == null) {
+                    viewContainer.legendLayout.setTag(calendarMonth.getMonth());
+//                    viewContainer.legendLayout.children.map { it as TextView }.forEachIndexed { index, tv ->
+//                            tv.text = daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
+//                                    .toUpperCase(Locale.ENGLISH)
+//                        tv.setTextColorRes(R.color.example_5_text_grey)
+//                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+//                    }
+//                    month.yearMonth
+                }
             }
         });
 
+        calendarView.setMonthScrollListener(
+                calendarMonth -> {
+                    TextView tv = findViewById(R.id.exFiveMonthYearText);
+                    String title = new DateFormatSymbols().getMonths()[calendarMonth.getMonth()-1] + " " + calendarMonth.getYear();
+                    tv.setText(title);
+                    return null;
+                }
+        );
+
+        ImageView nextMonth = findViewById(R.id.exFiveNextMonthImage);
+        nextMonth.setOnClickListener(v -> {
+            calendarView.smoothScrollToMonth(calendarView.findFirstVisibleMonth().getYearMonth().plusMonths(1));
+        });
+
+        ImageView previousMonth = findViewById(R.id.exFivePreviousMonthImage);
+        previousMonth.setOnClickListener(v -> {
+            calendarView.smoothScrollToMonth(calendarView.findFirstVisibleMonth().getYearMonth().minusMonths(1));
+        });
+
         YearMonth currentMonth = YearMonth.now();
-        YearMonth firstMonth = currentMonth.minusMonths(10);
-        YearMonth lastMonth = currentMonth.plusMonths(10);
         DayOfWeek firstDayOfWeek = WeekFields.of(Locale.getDefault()).getFirstDayOfWeek();
-        calendarView.setup(firstMonth, lastMonth, firstDayOfWeek);
+        calendarView.setup(currentMonth.minusMonths(10), currentMonth.plusMonths(10), firstDayOfWeek);
         calendarView.scrollToMonth(currentMonth);
     }
 
     public static class DayViewContainer extends ViewContainer
     {
         public TextView textView;
+        public ConstraintLayout layout;
+        public CalendarDay day;
 
         public DayViewContainer(View view) {
             super(view);
-            textView = view.findViewById(R.id.exTwoDayText);
+            textView = view.findViewById(R.id.exFiveDayText);
+            layout = view.findViewById(R.id.exFiveDayLayout);
         }
     }
 
     public static class MonthHeaderContainer extends ViewContainer {
 
-        public TextView textView;
+        public LinearLayout legendLayout;
         public MonthHeaderContainer(View view) {
             super(view);
-            textView = view.findViewById(R.id.exTwoHeaderText);
+            legendLayout = view.findViewById(R.id.legendLayout);
         }
     }
 }
