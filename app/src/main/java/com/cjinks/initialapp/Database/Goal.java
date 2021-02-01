@@ -10,6 +10,10 @@ public class Goal {
 
     public int completionRangeStart;
     public int completionRangeEnd;
+    public boolean completed = false;
+
+    public int startColor;
+    public int EndColor;
 
     public LinkedHashMap<LocalDate, Integer> goalProgressData;
 

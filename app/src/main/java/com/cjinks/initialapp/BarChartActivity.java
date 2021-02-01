@@ -111,8 +111,7 @@ public class BarChartActivity extends AppCompatActivity implements SeekBar.OnSee
 
     }
 
-    private void setData(int count, float range)
-    {
+    private void setData(int count, float range) {
         float start = 1f;
         Goal goal = goals.get(1);
         ArrayList<BarEntry> values = new ArrayList<>();
@@ -123,10 +122,11 @@ public class BarChartActivity extends AppCompatActivity implements SeekBar.OnSee
 //        }
 
         int i = 0;
-        for(Map.Entry<LocalDate, Integer> entry : goal.goalProgressData.entrySet())
-        {
-            values.add(new BarEntry(i, entry.getValue()));
-            i++;
+        for (int j = 0; j < 5; j++) {
+            for (Map.Entry<LocalDate, Integer> entry : goal.goalProgressData.entrySet()) {
+                values.add(new BarEntry(i, entry.getValue()));
+                i++;
+            }
         }
 
         BarDataSet set1;

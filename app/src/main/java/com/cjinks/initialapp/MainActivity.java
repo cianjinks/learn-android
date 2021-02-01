@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements AddGoalDialog.Not
     
     public void sendMessage(View view)
     {
-        Intent intent = new Intent(this, BarChartActivity.class);
+        Intent intent = new Intent(this, CalendarActivity.class);
         String message = "";
         try {
             message = testReadGoalJSON();
