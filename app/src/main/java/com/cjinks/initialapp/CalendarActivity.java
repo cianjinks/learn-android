@@ -111,6 +111,9 @@ public class CalendarActivity extends AppCompatActivity {
             super(view);
             textView = view.findViewById(R.id.exFiveDayText);
             layout = view.findViewById(R.id.exFiveDayLayout);
+            view.setOnClickListener(v -> {
+                v.findViewById(R.id.exFiveDayFrame).setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.teal_200));
+            });
         }
     }
 

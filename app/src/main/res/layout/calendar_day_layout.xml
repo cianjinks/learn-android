@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <FrameLayout
+        android:id="@+id/exFiveDayFrame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="1dp"
@@ -22,22 +23,6 @@
             android:textColor="@color/example_5_text_grey"
             android:textSize="12sp"
             tools:text="24" />
-
-        <View
-            android:id="@+id/exFiveDayFlightTop"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="18dp"
-            android:background="@color/blue_grey_700" />
-
-        <View
-            android:id="@+id/exFiveDayFlightBottom"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="8dp"
-            android:background="@color/brown_700" />
 
     </FrameLayout>
 
