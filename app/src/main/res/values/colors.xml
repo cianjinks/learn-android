@@ -15,4 +15,15 @@
     <color name="example_5_text_grey_light">#616161</color>
     <color name="brown_700">#5D4037</color>
     <color name="blue_grey_700">#455A64</color>
+
+    <color name="gradient_0">#ff3300</color>
+    <color name="gradient_1">#ff6600</color>
+    <color name="gradient_2">#ff9500</color>
+    <color name="gradient_3">#ffc800</color>
+    <color name="gradient_4">#ffff00</color>
+    <color name="gradient_5">#c8ff00</color>
+    <color name="gradient_6">#95ff00</color>
+    <color name="gradient_7">#66ff00</color>
+    <color name="gradient_8">#33ff00</color>
+    <color name="gradient_9">#00ff00</color>
 </resources>
